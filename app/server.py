@@ -4,6 +4,7 @@ from langserve import add_routes
 from app.api.answer import router as answer_router
 from app.api.upload import router as upload_router
 from starlette.middleware.cors import CORSMiddleware
+from app.api.chat import router as chat_router
 
 app = FastAPI()
 
@@ -25,8 +26,10 @@ async def redirect_root_to_docs():
 
 
 # Edit this to add the chain you want to add
+app.include_router(chat_router, prefix="/v1/chat", tags=["chat"])
 app.include_router(answer_router, prefix="/v1/answer", tags=["answer"])
 app.include_router(upload_router, prefix="/v1", tags=["upload"])
+
 
 if __name__ == "__main__":
     import uvicorn
